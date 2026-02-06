@@ -59,7 +59,7 @@ const Feed = () => {
 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-            <Container maxWidth="lg">
+            <Container maxWidth="md">
                 {/* Page Title */}
                 <Box sx={{ mb: 3, textAlign: 'center' }}>
                     <Typography
