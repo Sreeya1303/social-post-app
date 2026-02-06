@@ -31,38 +31,40 @@ const Navbar = ({ onDrawerToggle }) => {
             }}
         >
             <Toolbar sx={{ justifyContent: 'space-between' }}>
-                {/* Mobile Menu Button */}
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    edge="start"
-                    onClick={onDrawerToggle}
-                    sx={{
-                        mr: 2,
-                        // Display on all screens now
-                        border: '1px solid rgba(255, 255, 255, 0.4)',
-                        borderRadius: '10px',
-                        p: 0.8,
-                        '&:hover': {
-                            bgcolor: 'rgba(255, 255, 255, 0.1)',
-                            borderColor: '#fff'
-                        }
-                    }}
-                >
-                    <MenuIcon sx={{ fontSize: 24 }} />
-                </IconButton>
-
-                {/* App Logo/Title */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <ShareIcon sx={{ fontSize: 32 }} />
-                    <Typography
-                        variant="h6"
-                        component="div"
-                        fontWeight={700}
-                        sx={{ letterSpacing: 0.5 }}
+                {/* Left Side: Menu Button + Logo */}
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    {/* Menu Button */}
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={onDrawerToggle}
+                        sx={{
+                            mr: 2,
+                            border: '1px solid rgba(255, 255, 255, 0.4)',
+                            borderRadius: '10px',
+                            p: 0.8,
+                            '&:hover': {
+                                bgcolor: 'rgba(255, 255, 255, 0.1)',
+                                borderColor: '#fff'
+                            }
+                        }}
                     >
-                        SocialPost
-                    </Typography>
+                        <MenuIcon sx={{ fontSize: 24 }} />
+                    </IconButton>
+
+                    {/* App Logo/Title */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <ShareIcon sx={{ fontSize: 32 }} />
+                        <Typography
+                            variant="h6"
+                            component="div"
+                            fontWeight={700}
+                            sx={{ letterSpacing: 0.5 }}
+                        >
+                            SocialPost
+                        </Typography>
+                    </Box>
                 </Box>
 
                 {/* User Info and Logout */}
