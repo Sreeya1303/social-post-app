@@ -37,9 +37,19 @@ const Navbar = ({ onDrawerToggle }) => {
                     aria-label="open drawer"
                     edge="start"
                     onClick={onDrawerToggle}
-                    sx={{ mr: 2, display: { sm: 'none' } }}
+                    sx={{
+                        mr: 2,
+                        display: { sm: 'none' },
+                        border: '1px solid rgba(255, 255, 255, 0.4)',
+                        borderRadius: '10px',
+                        p: 0.8,
+                        '&:hover': {
+                            bgcolor: 'rgba(255, 255, 255, 0.1)',
+                            borderColor: '#fff'
+                        }
+                    }}
                 >
-                    <MenuIcon />
+                    <MenuIcon sx={{ fontSize: 24 }} />
                 </IconButton>
 
                 {/* App Logo/Title */}
