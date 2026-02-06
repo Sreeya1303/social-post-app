@@ -134,39 +134,38 @@ Add these variables:
 
 ---
 
-## Step 4: Deploy Frontend to Vercel
+## Step 4: Deploy Frontend to Netlify
 
-### 4.1 Install Vercel CLI (Optional)
+### 4.1 Deploy via Netlify Dashboard
 
-```bash
-npm i -g vercel
-```
+1. Go to [Netlify](https://www.netlify.com)
+2. Click **"Sign Up"** or **"Log in"** (use GitHub)
+3. Click **"Add new site"** → **"Import from existing project"**
+4. Select **"GitHub"**
+5. Authorize Netlify to access your GitHub account
+6. Pick the `social-post-app` repository
 
-### 4.2 Deploy via Vercel Dashboard
+### 4.2 Configure Build Settings
 
-1. Go to [Vercel](https://vercel.com)
-2. Click **"Sign Up"** (use GitHub)
-3. Click **"Add New..."** → **"Project"**
-4. Import `social-post-app` repository
-5. Configure:
-   - **Framework Preset**: `Create React App`
-   - **Root Directory**: `frontend`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `build`
+Netlify should detect the settings automatically, but verify:
+
+- **Base directory**: `frontend`
+- **Build command**: `npm run build`
+- **Publish directory**: `build`
 
 ### 4.3 Add Environment Variables
 
-Click **"Environment Variables"** → Add:
+Click **"Show advanced"** or go to **Site Settings > Environment Variables** after creation.
 
-| Key | Value |
-|-----|-------|
-| `REACT_APP_API_URL` | Your Render backend URL + `/api` (e.g., `https://social-post-backend.onrender.com/api`) |
+Add/New Variable:
+- **Key**: `REACT_APP_API_URL`
+- **Value**: Your Render backend URL + `/api` (e.g., `https://social-post-backend.onrender.com/api`)
 
 ### 4.4 Deploy
 
-1. Click **"Deploy"**
-2. Wait for deployment (2-3 minutes)
-3. Once deployed, copy the URL (e.g., `https://social-post-app.vercel.app`)
+1. Click **"Deploy social-post-app"**
+2. Wait for the deploy log to finish (can take 2-3 minutes)
+3. Once the URL turns green (e.g., `https://random-name-12345.netlify.app`), that is your live site!
 
 ---
 
