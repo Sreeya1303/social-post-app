@@ -1,0 +1,197 @@
+import React, { useState, useEffect } from 'react';
+import {
+    Container,
+    Box,
+    Typography,
+    CircularProgress,
+    Alert,
+    Fab,
+    Button
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import Navbar from '../components/Navbar';
+import Sidebar from '../components/Sidebar';
+import CreatePost from '../components/CreatePost';
+import PostCard from '../components/PostCard';
+import { postsAPI } from '../services/api';
+
+/**
+ * Feed Page Component
+ * Main page displaying all posts and create post form
+ */
+const Feed = () => {
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+    const [showCreatePost, setShowCreatePost] = useState(true);
+    const [filterPromotion, setFilterPromotion] = useState(null); // null = all, true = promotions only
+
+    /**
+     * Fetch posts with optional promotion filter
+     */
+    const fetchPosts = async () => {
+        try {
+            setError('');
+            setLoading(true);
+
+            // Build query params - convert boolean to string for backend
+            const params = {};
+            if (filterPromotion !== null) {
+                params.isPromotion = String(filterPromotion);
+            }
+
+            console.log('Fetching posts with filter:', filterPromotion, 'params:', params);
+            const response = await postsAPI.getAllPosts(params);
+            console.log('Received posts:', response.data.posts.length);
+            setPosts(response.data.posts || []);
+        } catch (err) {
+            setError('Failed to load posts');
+            console.error('Error fetching posts:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Fetch posts on mount and when filter changes
+    useEffect(() => {
+        fetchPosts();
+    }, [filterPromotion]);
+
+    /**
+     * Refresh posts when a new post is created or updated
+     */
+    const handlePostUpdate = () => {
+        fetchPosts();
+    };
+
+    return (
+        <Box sx={{ bgcolor: '#f0f2f5', minHeight: '100vh' }}>
+            <Navbar />
+            <Box sx={{ mb: 3, textAlign: 'center' }}>
+                <Typography
+                    variant="h4"
+                    fontWeight={700}
+                    sx={{
+                        background: 'linear-gradient(45deg, #1976d2, #9c27b0)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        mb: 1
+                    }}
+                >
+                    Social Feed
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    Share your thoughts with the world
+                </Typography>
+
+                {/* Filter Tabs */}
+                <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', mt: 2 }}>
+                    <Button
+                        variant={filterPromotion === null ? 'contained' : 'outlined'}
+                        size="small"
+                        onClick={() => setFilterPromotion(null)}
+                        sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2 }}
+                    >
+                        All Posts
+                    </Button>
+                    <Button
+                        variant={filterPromotion === true ? 'contained' : 'outlined'}
+                        size="small"
+                        onClick={() => setFilterPromotion(true)}
+                        sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2 }}
+                    >
+                        Promotions
+                    </Button>
+                </Box>
+            </Box>
+
+            {/* Create Post Section */}
+            {showCreatePost && <CreatePost onPostCreated={handlePostUpdate} />}
+
+            {/* Floating Action Button */}
+            <Fab
+                color="primary"
+                aria-label="create post"
+                onClick={() => setShowCreatePost(!showCreatePost)}
+                sx={{
+                    position: 'fixed',
+                    bottom: 24,
+                    right: 24,
+                    width: 64,
+                    height: 64,
+                    boxShadow: '0 4px 20px rgba(25, 118, 210, 0.4)'
+                }}
+            >
+                <AddIcon sx={{ fontSize: 32, transform: showCreatePost ? 'rotate(45deg)' : 'none', transition: 'transform 0.3s' }} />
+            </Fab>
+
+            {/* Loading State */}
+            {loading && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+                    <CircularProgress />
+                </Box>
+            )}
+
+            {/* Error State */}
+            {error && (
+                <Alert severity="error" sx={{ mb: 3 }}>
+                    {error}
+                </Alert>
+            )}
+
+            {/* Posts Feed */}
+            {!loading && posts.length === 0 && (
+                <Box sx={{ textAlign: 'center', py: 8 }}>
+                    <Typography variant="h6" color="text.secondary">
+                        No posts yet. Be the first to share something!
+                    </Typography>
+                </Box>
+            )}
+
+            {!loading && posts.length > 0 && (
+                <Box>
+                    {posts.map((post) => (
+                        <AddIcon sx={{ fontSize: 32, transform: showCreatePost ? 'rotate(45deg)' : 'none', transition: 'transform 0.3s' }} />
+                </Fab>
+
+                {/* Loading State */}
+            {loading && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+                    <CircularProgress />
+                </Box>
+            )}
+
+            {/* Error State */}
+            {error && (
+                <Alert severity="error" sx={{ mb: 3 }}>
+                    {error}
+                </Alert>
+            )}
+
+            {/* Posts Feed */}
+            {!loading && posts.length === 0 && (
+                <Box sx={{ textAlign: 'center', py: 8 }}>
+                    <Typography variant="h6" color="text.secondary">
+                        No posts yet. Be the first to share something!
+                    </Typography>
+                </Box>
+            )}
+
+            {!loading && posts.length > 0 && (
+                <Box>
+                    {posts.map((post) => (
+                        <PostCard
+                            key={post._id}
+                            post={post}
+                            onPostUpdated={handlePostUpdate}
+                        />
+                    ))}
+                </Box>
+            )}
+        </Container>
+        </Box >
+    );
+};
+
+export default Feed;
+```
