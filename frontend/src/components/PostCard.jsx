@@ -22,7 +22,6 @@ import {
     DialogTitle,
     DialogContent,
     DialogContentText,
-    DialogActions,
     DialogActions
 } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
