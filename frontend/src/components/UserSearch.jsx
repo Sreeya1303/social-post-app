@@ -12,7 +12,6 @@ import {
     Typography,
     IconButton,
     InputAdornment,
-    InputAdornment,
     CircularProgress
 } from '@mui/material';
 import {
@@ -33,26 +32,23 @@ const UserSearch = ({ inputRef }) => {
     const [showResults, setShowResults] = useState(false);
 
     /**
-     * Perform user search
-     */
-    const performSearch = async () => {
-        try {
-            setLoading(true);
-            const response = await usersAPI.searchUsers(searchQuery);
-            setSearchResults(response.data.users || []);
-            setShowResults(true);
-        } catch (error) {
-            console.error('Search error:', error);
-            setSearchResults([]);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    /**
      * Debounced search effect
      */
     useEffect(() => {
+        const performSearch = async () => {
+            try {
+                setLoading(true);
+                const response = await usersAPI.searchUsers(searchQuery);
+                setSearchResults(response.data.users || []);
+                setShowResults(true);
+            } catch (error) {
+                console.error('Search error:', error);
+                setSearchResults([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         const delaySearch = setTimeout(() => {
             if (searchQuery.trim().length > 0) {
                 performSearch();
