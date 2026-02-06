@@ -21,7 +21,15 @@ const Sidebar = ({ mobileOpen, onClose, drawerWidth }) => {
         { text: 'Profile', icon: PersonIcon, path: '/profile' }
     ];
 
-    const isActive = (path) => location.pathname === path || (path === '/profile' && location.pathname.startsWith('/profile'));
+    const isActive = (path) => {
+        if (path === '/feed' && (location.pathname === '/feed' || location.pathname === '/')) {
+            return true;
+        }
+        if (path === '/profile' && location.pathname.startsWith('/profile')) {
+            return true;
+        }
+        return location.pathname === path;
+    };
 
     const handleItemClick = (path) => {
         navigate(path);
