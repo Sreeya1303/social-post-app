@@ -92,7 +92,7 @@ const Sidebar = ({ mobileOpen, onClose, drawerWidth }) => {
                 }}
                 sx={{
                     '& .MuiDrawer-paper': {
-                        boxSizing: 'border-sizing',
+                        boxSizing: 'border-box',
                         width: drawerWidth
                     },
                 }}
