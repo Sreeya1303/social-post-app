@@ -329,34 +329,13 @@ This project is created for the **3W Full Stack Internship Assignment**.
 
 ---
 
-## 👤 Author
-
-**[Your Name]**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
-
----
-
-## 🙏 Acknowledgments
-
-- Inspired by [TaskPlanet App](https://play.google.com/store/apps/details?id=com.taskplanet)
-- Built as part of 3W Full Stack Internship Round 1 Assignment
-- Material-UI for the beautiful component library
-
----
-
-## 📸 Screenshots
-
-> Add screenshots of your application here after deployment
-
----
 
 ## 🔗 Live Demo
 
-- **Frontend**: [Your Vercel URL]
-- **Backend**: [Your Render URL]
-- **GitHub**: [Your Repository URL]
+- **Frontend**: https://social-post-app-zeta.vercel.app/
+- **Backend**: https://social-post-app-75qi.onrender.com
+- **GitHub**: https://github.com/Sreeya1303/social-post-app.git
 
 ---
 
-**Happy Coding! 🚀**
+
