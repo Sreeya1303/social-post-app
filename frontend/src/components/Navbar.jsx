@@ -39,7 +39,7 @@ const Navbar = ({ onDrawerToggle }) => {
                     onClick={onDrawerToggle}
                     sx={{
                         mr: 2,
-                        display: { sm: 'none' },
+                        // Display on all screens now
                         border: '1px solid rgba(255, 255, 255, 0.4)',
                         borderRadius: '10px',
                         p: 0.8,

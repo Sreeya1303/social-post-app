@@ -81,8 +81,8 @@ const Sidebar = ({ mobileOpen, onClose, drawerWidth }) => {
         <Box
             component="nav"
             sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+            aria-label="mailbox folders"
         >
-            {/* Mobile Drawer */}
             <Drawer
                 variant="temporary"
                 open={mobileOpen}
@@ -91,26 +91,11 @@ const Sidebar = ({ mobileOpen, onClose, drawerWidth }) => {
                     keepMounted: true, // Better open performance on mobile.
                 }}
                 sx={{
-                    display: { xs: 'block', sm: 'none' },
-                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-                }}
-            >
-                {drawerContent}
-            </Drawer>
-
-            {/* Desktop Drawer */}
-            <Drawer
-                variant="permanent"
-                sx={{
-                    display: { xs: 'none', sm: 'block' },
                     '& .MuiDrawer-paper': {
-                        boxSizing: 'border-box',
-                        width: drawerWidth,
-                        borderRight: '1px solid #e0e0e0',
-                        top: 'auto' // Important for clipping under AppBar
+                        boxSizing: 'border-sizing',
+                        width: drawerWidth
                     },
                 }}
-                open
             >
                 {drawerContent}
             </Drawer>
