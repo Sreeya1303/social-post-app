@@ -1,15 +1,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Avatar, Box, Button } from '@mui/material';
+import { AppBar, Toolbar, Typography, Avatar, Box, Button, IconButton } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ShareIcon from '@mui/icons-material/Share';
+import MenuIcon from '@mui/icons-material/Menu';
 import { useAuth } from '../context/AuthContext';
 
 /**
  * Navigation bar component
  * Displays app logo, user info, and logout button
  */
-const Navbar = () => {
+const Navbar = ({ onDrawerToggle }) => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
 
@@ -21,14 +22,26 @@ const Navbar = () => {
 
     return (
         <AppBar
-            position="sticky"
+            position="fixed"
             elevation={2}
             sx={{
                 background: 'linear-gradient(90deg, #2196f3 0%, #1976d2 100%)',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                zIndex: (theme) => theme.zIndex.drawer + 1
             }}
         >
             <Toolbar sx={{ justifyContent: 'space-between' }}>
+                {/* Mobile Menu Button */}
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={onDrawerToggle}
+                    sx={{ mr: 2, display: { sm: 'none' } }}
+                >
+                    <MenuIcon />
+                </IconButton>
+
                 {/* App Logo/Title */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     <ShareIcon sx={{ fontSize: 32 }} />

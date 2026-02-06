@@ -9,6 +9,7 @@ import Feed from './pages/Feed';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Chat from './pages/Chat';
+import Layout from './components/Layout';
 
 /**
  * Custom theme configuration
@@ -287,7 +288,9 @@ function App() {
               path="/feed"
               element={
                 <ProtectedRoute>
-                  <Feed />
+                  <Layout>
+                    <Feed />
+                  </Layout>
                 </ProtectedRoute>
               }
             />
@@ -295,7 +298,9 @@ function App() {
               path="/dashboard"
               element={
                 <ProtectedRoute>
-                  <Dashboard />
+                  <Layout>
+                    <Dashboard />
+                  </Layout>
                 </ProtectedRoute>
               }
             />
@@ -303,7 +308,9 @@ function App() {
               path="/chat"
               element={
                 <ProtectedRoute>
-                  <Chat />
+                  <Layout>
+                    <Chat />
+                  </Layout>
                 </ProtectedRoute>
               }
             />
@@ -311,7 +318,9 @@ function App() {
               path="/profile/:userId?"
               element={
                 <ProtectedRoute>
-                  <Profile />
+                  <Layout>
+                    <Profile />
+                  </Layout>
                 </ProtectedRoute>
               }
             />

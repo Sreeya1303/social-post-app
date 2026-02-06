@@ -9,8 +9,6 @@ import {
     Fab
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
 import CreatePost from '../components/CreatePost';
 import PostCard from '../components/PostCard';
 import { postsAPI } from '../services/api';
@@ -60,64 +58,58 @@ const Feed = () => {
     }, []);
 
     return (
-        <Box sx={{ bgcolor: '#f0f2f5', minHeight: '100vh' }}>
-            <Navbar />
-            <Sidebar />
+        <Box>
+            <Container maxWidth="md">
+                {/* Page Title */}
+                <Box sx={{ mb: 3, textAlign: 'center' }}>
+                    <Typography
+                        variant="h4"
+                        fontWeight={700}
+                        sx={{
+                            background: 'linear-gradient(45deg, #1976d2, #9c27b0)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            mb: 1
+                        }}
+                    >
+                        Social Feed
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        Share your thoughts and connect with others
+                    </Typography>
+                </Box>
 
-            {/* Main content with left margin for sidebar */}
-            <Box sx={{ ml: '240px', pt: 3 }}>
-                <Container maxWidth="md" sx={{ py: 4 }}>
-                    {/* Page Title */}
-                    <Box sx={{ mb: 3, textAlign: 'center' }}>
-                        <Typography
-                            variant="h4"
-                            fontWeight={700}
-                            sx={{
-                                background: 'linear-gradient(45deg, #1976d2, #9c27b0)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                mb: 1
-                            }}
-                        >
-                            Social Feed
+
+
+                {/* Create Post Section */}
+                {showCreatePost && (
+                    <CreatePost onPostCreated={handlePostUpdate} />
+                )}
+
+                {/* Posts List */}
+                {loading ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+                        <CircularProgress />
+                    </Box>
+                ) : error ? (
+                    <Alert severity="error" sx={{ mb: 2 }}>
+                        {error}
+                    </Alert>
+                ) : posts.length === 0 ? (
+                    <Box sx={{ textAlign: 'center', py: 4 }}>
+                        <Typography variant="h6" color="text.secondary">
+                            No posts found
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            Share your thoughts and connect with others
+                            Be the first to share something!
                         </Typography>
                     </Box>
-
-
-
-                    {/* Create Post Section */}
-                    {showCreatePost && (
-                        <CreatePost onPostCreated={handlePostUpdate} />
-                    )}
-
-                    {/* Posts List */}
-                    {loading ? (
-                        <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
-                            <CircularProgress />
-                        </Box>
-                    ) : error ? (
-                        <Alert severity="error" sx={{ mb: 2 }}>
-                            {error}
-                        </Alert>
-                    ) : posts.length === 0 ? (
-                        <Box sx={{ textAlign: 'center', py: 4 }}>
-                            <Typography variant="h6" color="text.secondary">
-                                No posts found
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                Be the first to share something!
-                            </Typography>
-                        </Box>
-                    ) : (
-                        posts.map((post) => (
-                            <PostCard key={post._id} post={post} onUpdate={handlePostUpdate} />
-                        ))
-                    )}
-                </Container>
-            </Box>
+                ) : (
+                    posts.map((post) => (
+                        <PostCard key={post._id} post={post} onUpdate={handlePostUpdate} />
+                    ))
+                )}
+            </Container>
 
             {/* Floating Action Button for Mobile */}
             <Fab

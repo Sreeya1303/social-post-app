@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Drawer } from '@mui/material';
 import FeedIcon from '@mui/icons-material/Feed';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PersonIcon from '@mui/icons-material/Person';
@@ -10,7 +10,7 @@ import ChatIcon from '@mui/icons-material/Chat';
  * Sidebar Navigation Component
  * Provides navigation links for Feed, Dashboard, and Profile
  */
-const Sidebar = () => {
+const Sidebar = ({ mobileOpen, onClose, drawerWidth }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -23,21 +23,16 @@ const Sidebar = () => {
 
     const isActive = (path) => location.pathname === path || (path === '/profile' && location.pathname.startsWith('/profile'));
 
-    return (
-        <Box
-            sx={{
-                width: 240,
-                height: '100vh',
-                position: 'fixed',
-                top: 64, // Below navbar
-                left: 0,
-                bgcolor: '#fff',
-                borderRight: '1px solid #e0e0e0',
-                boxShadow: '2px 0 8px rgba(0,0,0,0.05)',
-                zIndex: 1000
-            }}
-        >
-            <List sx={{ pt: 2 }}>
+    const handleItemClick = (path) => {
+        navigate(path);
+        if (mobileOpen) {
+            onClose(); // Close drawer on mobile when item clicked
+        }
+    };
+
+    const drawerContent = (
+        <Box sx={{ mt: 8 }}>
+            <List>
                 {menuItems.map((item) => {
                     const Icon = item.icon;
                     const active = isActive(item.path);
@@ -45,7 +40,7 @@ const Sidebar = () => {
                     return (
                         <ListItem key={item.text} disablePadding>
                             <ListItemButton
-                                onClick={() => navigate(item.path)}
+                                onClick={() => handleItemClick(item.path)}
                                 sx={{
                                     mx: 1,
                                     mb: 0.5,
@@ -71,6 +66,46 @@ const Sidebar = () => {
                     );
                 })}
             </List>
+        </Box>
+    );
+
+    return (
+        <Box
+            component="nav"
+            sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        >
+            {/* Mobile Drawer */}
+            <Drawer
+                variant="temporary"
+                open={mobileOpen}
+                onClose={onClose}
+                ModalProps={{
+                    keepMounted: true, // Better open performance on mobile.
+                }}
+                sx={{
+                    display: { xs: 'block', sm: 'none' },
+                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                }}
+            >
+                {drawerContent}
+            </Drawer>
+
+            {/* Desktop Drawer */}
+            <Drawer
+                variant="permanent"
+                sx={{
+                    display: { xs: 'none', sm: 'block' },
+                    '& .MuiDrawer-paper': {
+                        boxSizing: 'border-box',
+                        width: drawerWidth,
+                        borderRight: '1px solid #e0e0e0',
+                        top: 'auto' // Important for clipping under AppBar
+                    },
+                }}
+                open
+            >
+                {drawerContent}
+            </Drawer>
         </Box>
     );
 };

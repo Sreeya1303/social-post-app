@@ -1,6 +1,9 @@
-# 🌐 Social Post Application
+# 🌐 Social Post App 📱
 
-A modern, full-stack social media application built with **React.js**, **Node.js**, **Express**, and **MongoDB**. Users can create accounts, share text and image posts, like, and comment — inspired by TaskPlanet's social feed design.
+**Live Demo:** [https://social-post-app-zeta.vercel.app/](https://social-post-app-zeta.vercel.app/)  
+**API Endpoint:** [https://social-post-app-75qi.onrender.com](https://social-post-app-75qi.onrender.com)
+
+A full-stack social media application featuring posts, likes, comments, user search, and real-time chat.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![React](https://img.shields.io/badge/React-18.x-61dafb.svg)

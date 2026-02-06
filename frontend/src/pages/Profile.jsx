@@ -9,8 +9,6 @@ import {
     Visibility as VisibilityIcon, People as PeopleIcon,
     Chat as ChatIcon
 } from '@mui/icons-material';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
 import PostCard from '../components/PostCard';
 import { usersAPI, postsAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -82,151 +80,131 @@ const Profile = () => {
 
     if (loading) {
         return (
-            <Box sx={{ bgcolor: '#f0f2f5', minHeight: '100vh' }}>
-                <Navbar />
-                <Sidebar />
-                <Box sx={{ ml: '240px', pt: 3 }}>
-                    <Container maxWidth="lg" sx={{ py: 4 }}>
-                        <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
-                            <CircularProgress />
-                        </Box>
-                    </Container>
-                </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
+                <CircularProgress />
             </Box>
         );
     }
 
     if (error || !profile) {
         return (
-            <Box sx={{ bgcolor: '#f0f2f5', minHeight: '100vh' }}>
-                <Navbar />
-                <Sidebar />
-                <Box sx={{ ml: '240px', pt: 3 }}>
-                    <Container maxWidth="lg" sx={{ py: 4 }}>
-                        <Alert severity="error">{error || 'Profile not found'}</Alert>
-                    </Container>
-                </Box>
-            </Box>
+            <Container maxWidth="lg" sx={{ py: 4 }}>
+                <Alert severity="error">{error || 'Profile not found'}</Alert>
+            </Container>
         );
     }
 
     return (
-        <Box sx={{ bgcolor: '#f0f2f5', minHeight: '100vh' }}>
-            <Navbar />
-            <Sidebar />
-
-            {/* Main content with left margin for sidebar */}
-            <Box sx={{ ml: '240px', pt: 3 }}>
-                <Container maxWidth="lg" sx={{ py: 4 }}>
-                    <Paper elevation={0} sx={{ borderRadius: 3, p: 4, mb: 3, bgcolor: '#fff' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-                                <Avatar sx={{ width: 100, height: 100, bgcolor: '#4facfe', fontSize: '2.5rem', fontWeight: 700 }}>
-                                    {profile.username.charAt(0).toUpperCase()}
-                                </Avatar>
-                                <Box>
-                                    <Typography variant="h4" fontWeight={700}>{profile.username}</Typography>
-                                    <Typography variant="body2" color="text.secondary">{profile.email}</Typography>
-                                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
-                                        Joined {new Date(profile.createdAt).toLocaleDateString()}
-                                    </Typography>
-                                </Box>
-                            </Box>
-                            {!isOwnProfile && (
-                                <Box sx={{ display: 'flex', gap: 2 }}>
-                                    <Button
-                                        variant="outlined"
-                                        startIcon={<ChatIcon />}
-                                        onClick={() => navigate(`/chat?userId=${profileUserId}`)}
-                                        sx={{
-                                            textTransform: 'none',
-                                            fontWeight: 600,
-                                            px: 3,
-                                            py: 1.5
-                                        }}
-                                    >
-                                        Message
-                                    </Button>
-                                    <Button
-                                        variant={isFollowing ? 'outlined' : 'contained'}
-                                        onClick={handleFollowClick}
-                                        disabled={followLoading}
-                                        sx={{
-                                            textTransform: 'none',
-                                            fontWeight: 600,
-                                            px: 4,
-                                            py: 1.5,
-                                            boxShadow: isFollowing ? 'none' : '0 4px 12px rgba(33, 150, 243, 0.3)'
-                                        }}
-                                    >
-                                        {followLoading ? <CircularProgress size={20} /> : (isFollowing ? 'Unfollow' : 'Follow')}
-                                    </Button>
-                                </Box>
-                            )}
-                        </Box>
-                        <Divider sx={{ my: 3 }} />
-                        <Grid container spacing={3}>
-                            <Grid item xs={6} sm={3}>
-                                <Box sx={{ textAlign: 'center' }}>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
-                                        <ArticleIcon sx={{ color: '#4facfe', fontSize: 28, mr: 1 }} />
-                                        <Typography variant="h5" fontWeight={700} color="#4facfe">{profile.postCount || 0}</Typography>
-                                    </Box>
-                                    <Typography variant="body2" color="text.secondary" fontWeight={600}>Posts</Typography>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={6} sm={3}>
-                                <Box sx={{ textAlign: 'center' }}>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
-                                        <PeopleIcon sx={{ color: '#fa709a', fontSize: 28, mr: 1 }} />
-                                        <Typography variant="h5" fontWeight={700} color="#fa709a">{profile.followerCount || 0}</Typography>
-                                    </Box>
-                                    <Typography variant="body2" color="text.secondary" fontWeight={600}>Followers</Typography>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={6} sm={3}>
-                                <Box sx={{ textAlign: 'center' }}>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
-                                        <FavoriteIcon sx={{ color: '#51cf66', fontSize: 28, mr: 1 }} />
-                                        <Typography variant="h5" fontWeight={700} color="#51cf66">{profile.totalLikes || 0}</Typography>
-                                    </Box>
-                                    <Typography variant="body2" color="text.secondary" fontWeight={600}>Total Likes</Typography>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={6} sm={3}>
-                                <Box sx={{ textAlign: 'center' }}>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
-                                        <VisibilityIcon sx={{ color: '#ffd43b', fontSize: 28, mr: 1 }} />
-                                        <Typography variant="h5" fontWeight={700} color="#ffd43b">{profile.totalViews || 0}</Typography>
-                                    </Box>
-                                    <Typography variant="body2" color="text.secondary" fontWeight={600}>Total Views</Typography>
-                                </Box>
-                            </Grid>
-                        </Grid>
-                    </Paper>
-
-                    <Paper elevation={0} sx={{ borderRadius: 3, p: 3, bgcolor: '#fff' }}>
-                        <Typography variant="h5" fontWeight={700} sx={{ mb: 3 }}>
-                            {isOwnProfile ? 'My Posts' : `${profile.username}'s Posts`}
-                        </Typography>
-                        {posts.length === 0 && (
-                            <Box sx={{ textAlign: 'center', py: 6 }}>
-                                <ArticleIcon sx={{ fontSize: 64, color: '#bbb', mb: 2 }} />
-                                <Typography variant="h6" color="text.secondary">
-                                    {isOwnProfile ? "You haven't created any posts yet" : 'No posts yet'}
+        <Box>
+            <Container maxWidth="lg">
+                <Paper elevation={0} sx={{ borderRadius: 3, p: 4, mb: 3, bgcolor: '#fff' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+                            <Avatar sx={{ width: 100, height: 100, bgcolor: '#4facfe', fontSize: '2.5rem', fontWeight: 700 }}>
+                                {profile.username.charAt(0).toUpperCase()}
+                            </Avatar>
+                            <Box>
+                                <Typography variant="h4" fontWeight={700}>{profile.username}</Typography>
+                                <Typography variant="body2" color="text.secondary">{profile.email}</Typography>
+                                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
+                                    Joined {new Date(profile.createdAt).toLocaleDateString()}
                                 </Typography>
                             </Box>
-                        )}
-                        {posts.length > 0 && (
-                            <Box>
-                                {posts.map((post) => (
-                                    <PostCard key={post._id} post={post} onPostUpdated={handlePostUpdate} showStats={true} />
-                                ))}
+                        </Box>
+                        {!isOwnProfile && (
+                            <Box sx={{ display: 'flex', gap: 2 }}>
+                                <Button
+                                    variant="outlined"
+                                    startIcon={<ChatIcon />}
+                                    onClick={() => navigate(`/chat?userId=${profileUserId}`)}
+                                    sx={{
+                                        textTransform: 'none',
+                                        fontWeight: 600,
+                                        px: 3,
+                                        py: 1.5
+                                    }}
+                                >
+                                    Message
+                                </Button>
+                                <Button
+                                    variant={isFollowing ? 'outlined' : 'contained'}
+                                    onClick={handleFollowClick}
+                                    disabled={followLoading}
+                                    sx={{
+                                        textTransform: 'none',
+                                        fontWeight: 600,
+                                        px: 4,
+                                        py: 1.5,
+                                        boxShadow: isFollowing ? 'none' : '0 4px 12px rgba(33, 150, 243, 0.3)'
+                                    }}
+                                >
+                                    {followLoading ? <CircularProgress size={20} /> : (isFollowing ? 'Unfollow' : 'Follow')}
+                                </Button>
                             </Box>
                         )}
-                    </Paper>
-                </Container>
-            </Box>
+                    </Box>
+                    <Divider sx={{ my: 3 }} />
+                    <Grid container spacing={3}>
+                        <Grid item xs={6} sm={3}>
+                            <Box sx={{ textAlign: 'center' }}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
+                                    <ArticleIcon sx={{ color: '#4facfe', fontSize: 28, mr: 1 }} />
+                                    <Typography variant="h5" fontWeight={700} color="#4facfe">{profile.postCount || 0}</Typography>
+                                </Box>
+                                <Typography variant="body2" color="text.secondary" fontWeight={600}>Posts</Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={6} sm={3}>
+                            <Box sx={{ textAlign: 'center' }}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
+                                    <PeopleIcon sx={{ color: '#fa709a', fontSize: 28, mr: 1 }} />
+                                    <Typography variant="h5" fontWeight={700} color="#fa709a">{profile.followerCount || 0}</Typography>
+                                </Box>
+                                <Typography variant="body2" color="text.secondary" fontWeight={600}>Followers</Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={6} sm={3}>
+                            <Box sx={{ textAlign: 'center' }}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
+                                    <FavoriteIcon sx={{ color: '#51cf66', fontSize: 28, mr: 1 }} />
+                                    <Typography variant="h5" fontWeight={700} color="#51cf66">{profile.totalLikes || 0}</Typography>
+                                </Box>
+                                <Typography variant="body2" color="text.secondary" fontWeight={600}>Total Likes</Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={6} sm={3}>
+                            <Box sx={{ textAlign: 'center' }}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
+                                    <VisibilityIcon sx={{ color: '#ffd43b', fontSize: 28, mr: 1 }} />
+                                    <Typography variant="h5" fontWeight={700} color="#ffd43b">{profile.totalViews || 0}</Typography>
+                                </Box>
+                                <Typography variant="body2" color="text.secondary" fontWeight={600}>Total Views</Typography>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Paper>
+
+                <Paper elevation={0} sx={{ borderRadius: 3, p: 3, bgcolor: '#fff' }}>
+                    <Typography variant="h5" fontWeight={700} sx={{ mb: 3 }}>
+                        {isOwnProfile ? 'My Posts' : `${profile.username}'s Posts`}
+                    </Typography>
+                    {posts.length === 0 && (
+                        <Box sx={{ textAlign: 'center', py: 6 }}>
+                            <ArticleIcon sx={{ fontSize: 64, color: '#bbb', mb: 2 }} />
+                            <Typography variant="h6" color="text.secondary">
+                                {isOwnProfile ? "You haven't created any posts yet" : 'No posts yet'}
+                            </Typography>
+                        </Box>
+                    )}
+                    {posts.length > 0 && (
+                        <Box>
+                            {posts.map((post) => (
+                                <PostCard key={post._id} post={post} onPostUpdated={handlePostUpdate} showStats={true} />
+                            ))}
+                        </Box>
+                    )}
+                </Paper>
+            </Container>
         </Box>
     );
 };
