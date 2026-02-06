@@ -58,7 +58,7 @@ const Feed = () => {
     }, []);
 
     return (
-        <Box>
+        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             <Container maxWidth="md">
                 {/* Page Title */}
                 <Box sx={{ mb: 3, textAlign: 'center' }}>
