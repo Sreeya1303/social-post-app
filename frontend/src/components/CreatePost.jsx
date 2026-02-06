@@ -50,13 +50,6 @@ const CreatePost = ({ onPostCreated }) => {
     ];
 
     /**
-     * Handle tab change
-     */
-    const handleTabChange = (event, newValue) => {
-        setTabValue(newValue);
-    };
-
-    /**
      * Handle image selection
      */
     const handleImageChange = (e) => {

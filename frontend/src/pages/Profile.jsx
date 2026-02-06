@@ -62,6 +62,7 @@ const Profile = () => {
 
     useEffect(() => {
         if (profileUserId) fetchProfile();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [profileUserId]);
 
     const handleFollowClick = async () => {

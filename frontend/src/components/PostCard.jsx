@@ -23,8 +23,7 @@ import {
     DialogContent,
     DialogContentText,
     DialogActions,
-    Menu,
-    MenuItem
+    DialogActions
 } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -32,7 +31,6 @@ import CommentIcon from '@mui/icons-material/Comment';
 import SendIcon from '@mui/icons-material/Send';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import DeleteIcon from '@mui/icons-material/Delete';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ReplyIcon from '@mui/icons-material/Reply';
 import { formatRelativeTime, getImageUrl } from '../utils/helpers';
 import { useAuth } from '../context/AuthContext';
@@ -49,7 +47,6 @@ const PostCard = ({ post, onPostUpdated }) => {
     const [submitting, setSubmitting] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [deleting, setDeleting] = useState(false);
-    const [menuAnchor, setMenuAnchor] = useState(null);
 
     // Check if current user has liked the post
     const isLiked = post.likes?.some(like => like.userId === user.id);
@@ -318,7 +315,7 @@ const PostCard = ({ post, onPostUpdated }) => {
                                         alignItems="flex-start"
                                         sx={{ px: 0, py: 1.5, bgcolor: 'white', borderRadius: 2, mb: 1 }}
                                         secondaryAction={
-                                            isCommentOwner && (
+                                            (isCommentOwner && (
                                                 <Box sx={{ display: 'flex' }}>
                                                     <Tooltip title="Reply">
                                                         <IconButton
@@ -347,7 +344,7 @@ const PostCard = ({ post, onPostUpdated }) => {
                                                         </IconButton>
                                                     </Tooltip>
                                                 </Box>
-                                            ) || (
+                                            )) || (
                                                 <Tooltip title="Reply">
                                                     <IconButton
                                                         edge="end"

@@ -6,17 +6,11 @@ import {
     TextField,
     IconButton,
     Avatar,
-    CircularProgress,
-    Divider,
-    List,
-    ListItem,
-    ListItemText,
-    ListItemAvatar
+    CircularProgress
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ReplyIcon from '@mui/icons-material/Reply';
 import { messagesAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
@@ -82,7 +76,7 @@ const ChatWindow = ({ activeChat, onBack }) => {
 
         try {
             setSending(true);
-            const response = await messagesAPI.sendMessage(activeChat._id, newMessage);
+            await messagesAPI.sendMessage(activeChat._id, newMessage);
 
             // Optimistically add message or use response
             // Refresh messages to be safe and ensure consistent state

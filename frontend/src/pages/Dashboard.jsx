@@ -29,7 +29,7 @@ import { useAuth } from '../context/AuthContext';
 const Dashboard = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
-    const [selectedGenre, setSelectedGenre] = useState(null);
+    const [selectedGenre] = useState(null);
 
     // Refs for scrolling/focus interaction
     const searchInputRef = React.useRef(null);

@@ -12,13 +12,12 @@ import {
     Typography,
     IconButton,
     InputAdornment,
-    CircularProgress,
-    Chip
+    InputAdornment,
+    CircularProgress
 } from '@mui/material';
 import {
     Search as SearchIcon,
-    ChatBubble as ChatIcon,
-    Person as PersonIcon
+    ChatBubble as ChatIcon
 } from '@mui/icons-material';
 import { usersAPI } from '../services/api';
 
@@ -32,22 +31,6 @@ const UserSearch = ({ inputRef }) => {
     const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showResults, setShowResults] = useState(false);
-
-    /**
-     * Debounced search effect
-     */
-    useEffect(() => {
-        const delaySearch = setTimeout(() => {
-            if (searchQuery.trim().length > 0) {
-                performSearch();
-            } else {
-                setSearchResults([]);
-                setShowResults(false);
-            }
-        }, 500);
-
-        return () => clearTimeout(delaySearch);
-    }, [searchQuery]);
 
     /**
      * Perform user search
@@ -65,6 +48,22 @@ const UserSearch = ({ inputRef }) => {
             setLoading(false);
         }
     };
+
+    /**
+     * Debounced search effect
+     */
+    useEffect(() => {
+        const delaySearch = setTimeout(() => {
+            if (searchQuery.trim().length > 0) {
+                performSearch();
+            } else {
+                setSearchResults([]);
+                setShowResults(false);
+            }
+        }, 500);
+
+        return () => clearTimeout(delaySearch);
+    }, [searchQuery]);
 
     /**
      * Navigate to user profile
